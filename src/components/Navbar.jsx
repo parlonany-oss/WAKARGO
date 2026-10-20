@@ -38,7 +38,7 @@ export default function Navbar() {
           <a href="#track" className="text-sm font-display font-medium text-brand hover:text-brand-dark transition-colors">
             Track Shipment
           </a>
-          <a href="#quote" className="btn-primary text-sm">
+          <a href="/quote" className="btn-primary text-sm">
             Get a Quote
           </a>
         </div>
@@ -65,7 +65,7 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a href="#quote" className="btn-primary w-full justify-center mt-2">
+          <a href="/quote" className="btn-primary w-full justify-center mt-2">
             Get a Quote
           </a>
         </div>
