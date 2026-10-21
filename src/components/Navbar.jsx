@@ -6,6 +6,8 @@ const navLinks = [
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
+  { label: 'Calculate Shipping Rate', href: '/calculate-shipping-rate' },
+  { label: 'Customs Clearance', href: '/customs-clearance' },
 ]
 
 export default function Navbar() {

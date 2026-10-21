@@ -7,6 +7,8 @@ import HowItWorksPage from './pages/HowItWorksPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import QuotePage from './pages/QuotePage'
+import CalculateShippingRatePage from './pages/Calculate Shipping RatePage'
+import CustomsClearancePage from './pages/CustomsClearancePage'
 
 function App() {
   return (
@@ -20,6 +22,9 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/quote" element={<QuotePage />} />
+          <Route path="/calculate-shipping-rate" element={<CalculateShippingRatePage />} />
+          <Route path="/customs-clearance" element={<CustomsClearancePage />} />
+    
         </Routes>
         <Footer />
       </div>
