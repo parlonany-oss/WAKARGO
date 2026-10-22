@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { supabase } from '../lib/supabase'
 
 const serviceTypes = [
   'Ship Abroad (Diaspora)',
@@ -16,6 +17,8 @@ const modes = ['Air', 'Sea', 'Land', 'Not Sure – Advise Me']
 
 export default function QuotePage() {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [form, setForm] = useState({
     fullName: '', email: '', phone: '',
     serviceType: '', mode: '',
@@ -28,10 +31,33 @@ export default function QuotePage() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    // Backend will be wired here
-    console.log('Quote request:', form)
+    setLoading(true)
+    setError(null)
+
+    const { error: dbError } = await supabase.from('quote_requests').insert([{
+      full_name: form.fullName,
+      email: form.email,
+      phone: form.phone,
+      service_type: form.serviceType,
+      mode: form.mode,
+      origin: form.origin,
+      destination: form.destination,
+      cargo_description: form.cargoDesc,
+      weight: form.weight,
+      dimensions: form.dimensions,
+      message: form.notes,
+    }])
+
+    setLoading(false)
+
+    if (dbError) {
+      setError('Something went wrong. Please try again or contact us directly.')
+      console.error('Supabase error:', dbError)
+      return
+    }
+
     setSubmitted(true)
   }
 
@@ -188,9 +214,15 @@ export default function QuotePage() {
                 className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-brand transition-colors resize-none" />
             </div>
 
-            <button type="submit"
-              className="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-display font-semibold px-10 py-4 rounded-md transition-colors duration-200">
-              Submit Quote Request <ArrowRight size={18} />
+            {error && (
+              <p className="text-red-600 text-sm font-body bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+                {error}
+              </p>
+            )}
+
+            <button type="submit" disabled={loading}
+              className="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-display font-semibold px-10 py-4 rounded-md transition-colors duration-200">
+              {loading ? 'Submitting…' : <> Submit Quote Request <ArrowRight size={18} /> </>}
             </button>
 
           </form>

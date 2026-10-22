@@ -1,4 +1,6 @@
-import { Mail, Phone, MapPin, Clock } from 'lucide-react'
+import { useState } from 'react'
+import { Mail, Phone, MapPin, Clock, CheckCircle2 } from 'lucide-react'
+import { supabase } from '../lib/supabase'
 
 const contactDetails = [
   {
@@ -32,6 +34,41 @@ const contactDetails = [
 ]
 
 export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [form, setForm] = useState({
+    fullName: '', email: '', phone: '', subject: '', message: '',
+  })
+
+  const handleChange = e => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
+
+    const { error: dbError } = await supabase.from('contact_messages').insert([{
+      full_name: form.fullName,
+      email: form.email,
+      phone: form.phone,
+      subject: form.subject,
+      message: form.message,
+    }])
+
+    setLoading(false)
+
+    if (dbError) {
+      setError('Something went wrong. Please try again or email us directly.')
+      console.error('Supabase error:', dbError)
+      return
+    }
+
+    setSubmitted(true)
+  }
+
   return (
     <div className="bg-white">
 
@@ -79,34 +116,66 @@ export default function ContactPage() {
           {/* Right — quick message form */}
           <div>
             <h2 className="font-display font-bold text-gray-900 text-xl mb-6">Send Us a Message</h2>
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            {submitted ? (
+              <div className="flex flex-col items-start gap-4 py-8">
+                <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center">
+                  <CheckCircle2 size={24} className="text-brand" />
+                </div>
                 <div>
-                  <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Full Name</label>
-                  <input type="text" placeholder="John Doe"
+                  <h3 className="font-display font-bold text-gray-900 text-lg mb-1">Message Sent!</h3>
+                  <p className="text-muted font-body text-sm leading-relaxed">
+                    Thanks for reaching out. We'll get back to you within 24 hours.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Full Name *</label>
+                    <input required type="text" name="fullName" value={form.fullName} onChange={handleChange}
+                      placeholder="John Doe"
+                      className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body text-gray-900 focus:outline-none focus:border-brand transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Email *</label>
+                    <input required type="email" name="email" value={form.email} onChange={handleChange}
+                      placeholder="john@example.com"
+                      className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body text-gray-900 focus:outline-none focus:border-brand transition-colors" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Phone</label>
+                  <input type="tel" name="phone" value={form.phone} onChange={handleChange}
+                    placeholder="+234 000 000 0000"
                     className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body text-gray-900 focus:outline-none focus:border-brand transition-colors" />
                 </div>
                 <div>
-                  <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Email</label>
-                  <input type="email" placeholder="john@example.com"
+                  <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Subject *</label>
+                  <input required type="text" name="subject" value={form.subject} onChange={handleChange}
+                    placeholder="What's this about?"
                     className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body text-gray-900 focus:outline-none focus:border-brand transition-colors" />
                 </div>
-              </div>
-              <div>
-                <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Subject</label>
-                <input type="text" placeholder="What's this about?"
-                  className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body text-gray-900 focus:outline-none focus:border-brand transition-colors" />
-              </div>
-              <div>
-                <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Message</label>
-                <textarea rows={5} placeholder="Tell us how we can help..."
-                  className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body text-gray-900 focus:outline-none focus:border-brand transition-colors resize-none" />
-              </div>
-              <button type="submit"
-                className="w-full bg-brand hover:bg-brand-dark text-white font-display font-semibold py-4 rounded-lg transition-colors duration-200">
-                Send Message
-              </button>
-            </form>
+                <div>
+                  <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Message *</label>
+                  <textarea required rows={5} name="message" value={form.message} onChange={handleChange}
+                    placeholder="Tell us how we can help..."
+                    className="w-full border border-border rounded-lg px-4 py-3 text-sm font-body text-gray-900 focus:outline-none focus:border-brand transition-colors resize-none" />
+                </div>
+
+                {error && (
+                  <p className="text-red-600 text-sm font-body bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+                    {error}
+                  </p>
+                )}
+
+                <button type="submit" disabled={loading}
+                  className="w-full bg-brand hover:bg-brand-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-display font-semibold py-4 rounded-lg transition-colors duration-200">
+                  {loading ? 'Sending…' : 'Send Message'}
+                </button>
+              </form>
+            )}
           </div>
 
         </div>
