@@ -1,4 +1,5 @@
 import { ClipboardList, Calculator, PackageCheck, Truck, CheckCircle2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const steps = [
   {
@@ -79,10 +80,10 @@ export default function HowItWorks() {
 
         {/* CTA */}
         <div className="mt-16 text-center">
-          <a href="#quote"
+          <Link to="/quote"
             className="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-display font-semibold px-10 py-4 rounded-md transition-colors duration-200">
             Start a Shipment
-          </a>
+          </Link>
         </div>
 
       </div>

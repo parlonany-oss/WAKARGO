@@ -1,10 +1,11 @@
 import { ArrowRight, Package, Truck, Ship, FileCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const services = [
-  { icon: Ship, label: 'Ship Abroad', desc: 'Diaspora shipping made easy', href: '#ship-abroad' },
-  { icon: Package, label: 'Import', desc: 'Vehicles, tyres, general cargo', href: '#import' },
-  { icon: Truck, label: 'Export', desc: 'Agro & local content', href: '#export' },
-  { icon: FileCheck, label: 'Customs Clearing', desc: 'Stress-free documentation', href: '#customs' },
+  { icon: Ship, label: 'Ship Abroad', desc: 'Diaspora shipping made easy', href: '/services' },
+  { icon: Package, label: 'Import', desc: 'Vehicles, tyres, general cargo', href: '/services' },
+  { icon: Truck, label: 'Export', desc: 'Agro & local content', href: '/exports' },
+  { icon: FileCheck, label: 'Customs Clearing', desc: 'Stress-free documentation', href: '/customs-clearance' },
 ]
 
 export default function Hero() {
@@ -50,13 +51,13 @@ export default function Hero() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-4">
               <a
-                href="#quote"
+                href="/quote"
                 className="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white font-display font-semibold px-8 py-4 rounded-md transition-colors duration-200 text-base"
               >
                 Get a Quote <ArrowRight size={18} />
               </a>
               <a
-                href="#track"
+                href="/track"
                 className="inline-flex items-center gap-2 border-2 border-white/70 text-white hover:bg-white hover:text-brand font-display font-medium px-8 py-4 rounded-md transition-colors duration-200 text-base"
               >
                 Track Shipment
@@ -72,7 +73,7 @@ export default function Hero() {
         <div className="container-pad">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border border-border rounded-xl overflow-hidden shadow-md">
             {services.map(({ icon: Icon, label, desc, href }, i) => (
-              <a
+              <Link
                 key={label}
                 href={href}
                 className={`flex flex-col items-start gap-2 p-6 hover:bg-offwhite transition-colors duration-200 group ${i < 3 ? 'border-r border-border' : ''}`}
@@ -85,7 +86,7 @@ export default function Hero() {
                   <p className="text-muted text-xs mt-0.5">{desc}</p>
                 </div>
                 <ArrowRight size={14} className="text-accent mt-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-              </a>
+              </Link>
             ))}
           </div>
         </div>

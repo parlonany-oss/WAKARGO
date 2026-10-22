@@ -1,4 +1,5 @@
 import { Globe2, Zap, ShieldCheck, HeartHandshake } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const values = [
   {
@@ -30,7 +31,7 @@ const stats = [
   { value: '24/7', label: 'Shipment Support' },
 ]
 
-export default function About() {
+export default function About({ isPage = false }) {
   return (
     <section id="about" className="py-20 bg-white">
       <div className="container-pad">
@@ -56,10 +57,10 @@ export default function About() {
               that shipping should be simple, transparent, and delivered with care —
               every time, to every doorstep.
             </p>
-            <a href="#quote"
+            <Link to={isPage ? '/quote' : '/about'}
               className="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-display font-semibold px-8 py-4 rounded-md transition-colors duration-200">
               Work With Us
-            </a>
+            </Link>
           </div>
 
           {/* Right — stats */}

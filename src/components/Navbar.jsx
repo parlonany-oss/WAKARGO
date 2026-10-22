@@ -3,7 +3,6 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 
 const navLinks = [
   { label: 'Services', href: '/services' },
-  { label: 'How It Works', href: '/how-it-works' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
   { label: 'Calculate Shipping Rate', href: '/calculate-shipping-rate' },
