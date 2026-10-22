@@ -12,6 +12,7 @@ import CustomsClearancePage from './pages/CustomsClearancePage'
 import ExportsPage from './pages/ExportsPage'
 import ImportsPage from './pages/ImportsPage'
 import ShipAbroadPage from './pages/ShipAbroadPage'
+import TrackingPage from './pages/TrackingPage'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/exports" element={<ExportsPage />} />
           <Route path="/imports" element={<ImportsPage />} />
           <Route path="/ship-abroad" element={<ShipAbroadPage />} />
+          <Route path="/track" element={<TrackingPage />} />
     
         </Routes>
         <Footer />

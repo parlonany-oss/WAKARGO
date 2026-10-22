@@ -7,6 +7,7 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
   { label: 'Calculate Shipping Rate', href: '/calculate-shipping-rate' },
   { label: 'Customs Clearance', href: '/customs-clearance' },
+  { label: 'Track Shipment', href: '/track' },
 ]
 
 export default function Navbar() {
@@ -36,9 +37,7 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <a href="#track" className="text-sm font-display font-medium text-brand hover:text-brand-dark transition-colors">
-            Track Shipment
-          </a>
+          
           <a href="/quote" className="btn-primary text-sm">
             Get a Quote
           </a>
