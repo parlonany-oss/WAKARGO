@@ -8,7 +8,7 @@ const services = [
     subtitle: 'Diaspora Shipping',
     desc: 'Sending goods to your loved ones abroad? We make it seamless — from your location to the doorstep of your loved ones abroad.',
     highlights: ['Door-to-door delivery', 'Real-time tracking', 'Secure packaging'],
-    href: '/services',
+    href: '/ship-abroad',
     accent: true,
   },
   {
