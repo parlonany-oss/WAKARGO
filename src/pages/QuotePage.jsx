@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
+import emailjs from '@emailjs/browser'
 
 const serviceTypes = [
   'Ship Abroad (Diaspora)',
@@ -31,12 +32,38 @@ export default function QuotePage() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+const handleSubmit = async e => {
+  e.preventDefault()
+  setLoading(true)
+  setError(null)
 
-    const { error: dbError } = await supabase.from('quote_requests').insert([{
+  // Save to Supabase
+  const { error: dbError } = await supabase.from('quote_requests').insert([{
+    full_name: form.fullName,
+    email: form.email,
+    phone: form.phone,
+    service_type: form.serviceType,
+    mode: form.mode,
+    origin: form.origin,
+    destination: form.destination,
+    cargo_description: form.cargoDesc,
+    weight: form.weight,
+    dimensions: form.dimensions,
+    message: form.notes,
+  }])
+
+  if (dbError) {
+    setLoading(false)
+    setError('Something went wrong. Please try again or contact us directly.')
+    console.error('Supabase error:', dbError)
+    return
+  }
+
+  // Send email notification
+  await emailjs.send(
+    'service_xz0wcfe',
+    'template_ki4nunw',
+    {
       full_name: form.fullName,
       email: form.email,
       phone: form.phone,
@@ -47,19 +74,14 @@ export default function QuotePage() {
       cargo_description: form.cargoDesc,
       weight: form.weight,
       dimensions: form.dimensions,
-      message: form.notes,
-    }])
+      notes: form.notes,
+    },
+    '0D1eVlS1-owDBJ_PM'
+  )
 
-    setLoading(false)
-
-    if (dbError) {
-      setError('Something went wrong. Please try again or contact us directly.')
-      console.error('Supabase error:', dbError)
-      return
-    }
-
-    setSubmitted(true)
-  }
+  setLoading(false)
+  setSubmitted(true)
+}
 
   if (submitted) {
     return (

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Mail, Phone, MapPin, Clock, CheckCircle2 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
+import emailjs from '@emailjs/browser'
 
 const contactDetails = [
   {
@@ -45,29 +46,44 @@ export default function ContactPage() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+const handleSubmit = async e => {
+  e.preventDefault()
+  setLoading(true)
+  setError(null)
 
-    const { error: dbError } = await supabase.from('contact_messages').insert([{
+  // Save to Supabase
+  const { error: dbError } = await supabase.from('contact_messages').insert([{
+    full_name: form.fullName,
+    email: form.email,
+    phone: form.phone,
+    subject: form.subject,
+    message: form.message,
+  }])
+
+  if (dbError) {
+    setLoading(false)
+    setError('Something went wrong. Please try again or email us directly.')
+    console.error('Supabase error:', dbError)
+    return
+  }
+
+  // Send email notification
+  await emailjs.send(
+    'service_xz0wcfe',
+    'template_6hj7494',
+    {
       full_name: form.fullName,
       email: form.email,
       phone: form.phone,
       subject: form.subject,
       message: form.message,
-    }])
+    },
+    '0D1eVlS1-owDBJ_PM'
+  )
 
-    setLoading(false)
-
-    if (dbError) {
-      setError('Something went wrong. Please try again or email us directly.')
-      console.error('Supabase error:', dbError)
-      return
-    }
-
-    setSubmitted(true)
-  }
+  setLoading(false)
+  setSubmitted(true)
+}
 
   return (
     <div className="bg-white">
