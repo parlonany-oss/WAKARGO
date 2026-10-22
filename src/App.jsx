@@ -10,6 +10,7 @@ import QuotePage from './pages/QuotePage'
 import CalculateShippingRatePage from './pages/Calculate Shipping RatePage'
 import CustomsClearancePage from './pages/CustomsClearancePage'
 import ExportsPage from './pages/ExportsPage'
+import ImportsPage from './pages/ImportsPage'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/calculate-shipping-rate" element={<CalculateShippingRatePage />} />
           <Route path="/customs-clearance" element={<CustomsClearancePage />} />
           <Route path="/exports" element={<ExportsPage />} />
+          <Route path="/imports" element={<ImportsPage />} />
     
         </Routes>
         <Footer />

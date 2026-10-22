@@ -17,7 +17,7 @@ const services = [
     subtitle: 'Vehicles, Cargo & Equipment',
     desc: 'We handle importation of vehicles, tyres, general cargo, and heavy-duty equipment — cleared, delivered, done.',
     highlights: ['Vehicles & tyres', 'General cargo', 'Heavy-duty equipment'],
-    href: '/services',
+    href: '/imports',
   },
   {
     icon: Truck,
