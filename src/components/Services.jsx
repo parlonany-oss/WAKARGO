@@ -1,4 +1,5 @@
 import { Package, Truck, Ship, FileCheck, Plane, Anchor, MapPin } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const services = [
   {
@@ -7,7 +8,7 @@ const services = [
     subtitle: 'Diaspora Shipping',
     desc: 'Sending goods to your loved ones abroad? We make it seamless — from your location to the doorstep of your loved ones abroad.',
     highlights: ['Door-to-door delivery', 'Real-time tracking', 'Secure packaging'],
-    href: '#ship-abroad',
+    href: '/services',
     accent: true,
   },
   {
@@ -16,7 +17,7 @@ const services = [
     subtitle: 'Vehicles, Cargo & Equipment',
     desc: 'We handle importation of vehicles, tyres, general cargo, and heavy-duty equipment — cleared, delivered, done.',
     highlights: ['Vehicles & tyres', 'General cargo', 'Heavy-duty equipment'],
-    href: '#import',
+    href: '/services',
   },
   {
     icon: Truck,
@@ -24,7 +25,7 @@ const services = [
     subtitle: 'Local Content & Agro',
     desc: 'We move Nigerian and African products to global markets — food, agricultural produce, and local content.',
     highlights: ['Food & agro products', 'Local content', 'Global destinations'],
-    href: '#export',
+    href: '/exports',
   },
   {
     icon: FileCheck,
@@ -32,7 +33,7 @@ const services = [
     subtitle: 'Freight Forwarding',
     desc: 'Navigating customs doesn\'t have to be stressful. Our experts handle all documentation and clearance end-to-end.',
     highlights: ['Full documentation', 'Port liaison', 'Duty consultation'],
-    href: '#customs',
+    href: '/customs-clearance',
   },
 ]
 
@@ -65,7 +66,7 @@ export default function Services() {
         {/* Service Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {services.map(({ icon: Icon, title, subtitle, desc, highlights, href, accent }) => (
-            <a key={title} href={href}
+            <Link key={title} to={href}
               className={`group flex flex-col p-6 rounded-xl border transition-all duration-200 hover:shadow-lg hover:-translate-y-1
                 ${accent
                   ? 'bg-brand border-brand text-white'
@@ -92,7 +93,7 @@ export default function Services() {
                   </li>
                 ))}
               </ul>
-            </a>
+            </Link>
           ))}
         </div>
 
