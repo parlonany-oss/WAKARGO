@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 import App from './App.jsx'
+import { inject } from '@vercel/analytics'
+inject()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
