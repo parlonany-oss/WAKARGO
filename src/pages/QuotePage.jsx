@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import emailjs from '@emailjs/browser'
+import SEO from '../components/SEO'
+
 
 const serviceTypes = [
   'Ship Abroad (Diaspora)',
@@ -104,6 +106,11 @@ const handleSubmit = async e => {
 
   return (
     <div className="bg-white">
+     <SEO
+      title="Get a Quote"
+      description="Request a shipping quote from WAKARGO. Fill in your cargo details and we'll get back to you within 24 hours."
+      path="/quote"
+    />
 
       {/* Page header */}
       <div className="bg-offwhite border-b border-border py-14">

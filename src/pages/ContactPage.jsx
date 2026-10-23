@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Mail, Phone, MapPin, Clock, CheckCircle2 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import emailjs from '@emailjs/browser'
+import SEO from '../components/SEO'
 
 const contactDetails = [
   {
@@ -87,6 +88,11 @@ const handleSubmit = async e => {
 
   return (
     <div className="bg-white">
+    <SEO
+      title="Contact Us"
+      description="Get in touch with WAKARGO. Call, email or send us a message — we're available Mon–Sat, 8am–6pm WAT."
+      path="/contact"
+    />
 
       {/* Page header */}
       <div className="bg-offwhite border-b border-border py-14">
