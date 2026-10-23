@@ -72,7 +72,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-10 items-start">
 
             <div className="lg:col-span-1">
-              <img src="/wakargo-logo.png" alt="WAKARGO" className="h-16 md:h-20 w-auto mb-1" />
+              <img src="/wakargo-logo.png" alt="WAKARGO" className="h-20 md:h-24 w-auto mb-1" />
               <p className="text-white/70 text-sm leading-snug max-w-xs">
                 A tech-driven shipping company moving cargo by Air, Sea & Land — worldwide.
               </p>
