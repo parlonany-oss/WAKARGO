@@ -22,6 +22,7 @@ export default function QuotePage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [honeypot, setHoneypot] = useState('')
   const [form, setForm] = useState({
     fullName: '', email: '', phone: '',
     serviceType: '', mode: '',
@@ -38,6 +39,7 @@ const handleSubmit = async e => {
   e.preventDefault()
   setLoading(true)
   setError(null)
+  if (honeypot) return // bot trap
 
   // Save to Supabase
   const { error: dbError } = await supabase.from('quote_requests').insert([{
@@ -131,6 +133,15 @@ const handleSubmit = async e => {
       <div className="container-pad py-16">
         <div className="max-w-3xl">
           <form onSubmit={handleSubmit} className="space-y-10">
+<input
+  type="text"
+  name="website"
+  value={honeypot}
+  onChange={e => setHoneypot(e.target.value)}
+  style={{ display: 'none' }}
+  tabIndex="-1"
+  autoComplete="off"
+/>
 
             {/* Section 1 — Contact Info */}
             <div>

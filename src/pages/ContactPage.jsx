@@ -39,6 +39,7 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [honeypot, setHoneypot] = useState('')
   const [form, setForm] = useState({
     fullName: '', email: '', phone: '', subject: '', message: '',
   })
@@ -51,6 +52,7 @@ const handleSubmit = async e => {
   e.preventDefault()
   setLoading(true)
   setError(null)
+  if (honeypot) return // bot trap
 
   // Save to Supabase
   const { error: dbError } = await supabase.from('contact_messages').insert([{
@@ -153,6 +155,15 @@ const handleSubmit = async e => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+<input
+  type="text"
+  name="website"
+  value={honeypot}
+  onChange={e => setHoneypot(e.target.value)}
+  style={{ display: 'none' }}
+  tabIndex="-1"
+  autoComplete="off"
+/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-display font-medium text-gray-700 mb-1.5">Full Name *</label>
