@@ -69,9 +69,9 @@ export default function Footer() {
       <div className="relative z-10">
 
         <div className="container-pad py-10 md:py-16">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-10 items-start">
 
-            <div className="col-span-2 lg:col-span-1">
+            <div className="lg:col-span-1">
               <img src="/wakargo-logo.png" alt="WAKARGO" className="h-20 md:h-24 w-auto mb-4" />
               <p className="text-white/70 text-sm leading-relaxed max-w-xs">
                 A tech-driven shipping company moving cargo by Air, Sea & Land — worldwide.
